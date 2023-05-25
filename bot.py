@@ -1,11 +1,15 @@
 from aiogram import Bot, Dispatcher, executor, types
 from app import keyboards
 import random
+from dotenv import load_dotenv
+import os
+
 
 
 def botstart():
 
-    bot = Bot('6029605037:AAGkT2kH2F86FQy5XTyjZN692wLTA8uUZHk')
+    load_dotenv()
+    bot = Bot(os.getenv('TOKEN'))
     dp = Dispatcher(bot=bot)
 
 
