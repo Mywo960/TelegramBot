@@ -72,32 +72,34 @@ def botstart():
         @dp.message_handler(content_types=types.ContentType.TEXT)
         async def guess_number(message: types.Message):
             global number1, tries1, right, left
-            await message.answer(f"Ваше число {number1}?.", reply_markup=keyboards.guess1)
+            number1 = (left + right) // 2
+
+
             tries1 = tries1 + 1
             answer = message.text
-            if right <= 100:
-                if answer != 'Угадал':
-                    number1 = (left + right) // 2
-                    if answer == 'Больше':
-                        left = number1 + 1
-                    elif answer == 'Меньше':
-                        right = number1 - 1
+            if answer != 'Загадал':
 
 
-                else:
-                    await message.reply(f'Я угадал за {tries1} попыток!!!',reply_markup=keyboards.main)
+                if right <= 100:
+                    if answer != 'Угадал':
 
+                        if answer == 'Больше':
+                            left = number1
+                            number1 = (left + right) // 2
+                            await message.answer(f"Ваше число {number1}?.", reply_markup=keyboards.guess1)
 
-
-
-
-
-
+                        elif answer == 'Меньше':
+                            right = number1
+                            number1 = (left + right) // 2
+                            await message.answer(f"Ваше число {number1}?.", reply_markup=keyboards.guess1)
 
 
 
+                    else:
+                        await message.reply(f'Я угадал за {tries1} попыток!!!',reply_markup=keyboards.main)
 
-
+            else:
+                await message.answer(f"Ваше число {number1}?.", reply_markup=keyboards.guess1)
 
 
 
